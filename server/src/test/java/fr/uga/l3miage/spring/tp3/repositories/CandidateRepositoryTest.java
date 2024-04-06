@@ -5,7 +5,6 @@ import fr.uga.l3miage.spring.tp3.models.CandidateEntity;
 import fr.uga.l3miage.spring.tp3.models.CandidateEvaluationGridEntity;
 import fr.uga.l3miage.spring.tp3.models.TestCenterEntity;
 import fr.uga.l3miage.spring.tp3.repositories.CandidateRepository;
-import org.assertj.core.api.recursive.comparison.RecursiveComparisonConfiguration;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,12 @@ public class CandidateRepositoryTest {
     @Autowired
     private  CandidateEvaluationGridRepository candidateEvaluationGridRepository;
 
-
+    @AfterEach
+    void resetALL(){
+        candidateRepository.deleteAll();
+        testCenterRepository.deleteAll();
+        candidateEvaluationGridRepository.deleteAll();
+    }
     @Test
     void findAllByTestCenterEntityCode(){
         //given
@@ -147,15 +151,11 @@ public class CandidateRepositoryTest {
         candidateRepository.save(candidate1);
         candidateRepository.save(candidate2);
         candidateRepository.save(candidate3);
-         Set<CandidateEntity> chi=new HashSet<>();
-         chi.add(candidate3);
+
         //when
         Set<CandidateEntity> response1=candidateRepository.findAllByCandidateEvaluationGridEntitiesGradeLessThan(10.0);
         //then
-        //lazy donc faire autre test
-        //assertThat(response1).allMatch(candidateEntity -> candidateEntity.getCandidateEvaluationGridEntities().stream().anyMatch(candidateEvaluationGridEntity -> candidateEvaluationGridEntity.getGrade()<10.0));
-        assertThat(response1.size()).isEqualTo(1);
-
+        assertThat(response1).allMatch(candidateEntity -> candidateEntity.getCandidateEvaluationGridEntities().stream().anyMatch(candidateEvaluationGridEntity -> candidateEvaluationGridEntity.getGrade()<10.0));
     }
 
 }
