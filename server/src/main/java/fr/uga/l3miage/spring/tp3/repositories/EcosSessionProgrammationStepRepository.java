@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface EcosSessionProgrammationStepRepository extends JpaRepository<EcosSessionProgrammationStepEntity,Long> {
 
     Optional<EcosSessionProgrammationStepEntity> findFirstByEcosSessionProgrammationEntityIdOrderByDateTimeDesc(Long idEcosSessionProgrammation);
+
 }

@@ -4,6 +4,7 @@ import fr.uga.l3miage.spring.tp3.components.CandidateComponent;
 import fr.uga.l3miage.spring.tp3.exceptions.technical.CandidateNotFoundException;
 import fr.uga.l3miage.spring.tp3.models.CandidateEntity;
 import fr.uga.l3miage.spring.tp3.models.CandidateEvaluationGridEntity;
+import fr.uga.l3miage.spring.tp3.models.EcosSessionEntity;
 import fr.uga.l3miage.spring.tp3.models.ExamEntity;
 import fr.uga.l3miage.spring.tp3.repositories.CandidateRepository;
 import org.junit.jupiter.api.Test;
@@ -70,6 +71,9 @@ public class CandidateServiceTest {
     //then
         assertThat(response).isEqualTo(12.0);
 }
+
+
+
 
 
 

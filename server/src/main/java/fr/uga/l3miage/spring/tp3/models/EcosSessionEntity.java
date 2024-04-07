@@ -1,6 +1,6 @@
 package fr.uga.l3miage.spring.tp3.models;
 
-import fr.uga.l3miage.spring.tp3.enums.SessionStatus;
+import fr.uga.l3miage.spring.tp3.responses.enums.SessionStatus;
 import lombok.*;
 
 import javax.persistence.*;
