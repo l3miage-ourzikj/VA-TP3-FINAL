@@ -101,12 +101,13 @@ public class SessionControllerTest {
                 .ecosSessionProgrammation(sessionProgrammationCreationRequest)
                 .build();
         // when
-        ResponseEntity<SessionResponse> response = testRestTemplate
-                .exchange("/api/sessions/create", HttpMethod.POST, new HttpEntity<>(sessionCreationRequest, headers), SessionResponse.class);
+        ResponseEntity<String> response = testRestTemplate
+                .exchange("/api/sessions/create", HttpMethod.POST, new HttpEntity<>(sessionCreationRequest, headers), String.class);
 
 
         //then
-        assertThat(response.getStatusCode()).isEqualTo(400);
+        assertThat(response.getStatusCodeValue()).isEqualTo(400);
+
 
     }
 
