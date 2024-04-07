@@ -134,7 +134,7 @@ public class SessionControllerTest {
 
     @Test
     void endSession(){
-        //given
+        //given.
 
         EcosSessionEntity requestedSession = EcosSessionEntity.builder()
                 .examEntities(Set.of())
