@@ -2,7 +2,9 @@ package fr.uga.l3miage.spring.tp3.components;
 
 import fr.uga.l3miage.spring.tp3.mappers.SessionMapper;
 import fr.uga.l3miage.spring.tp3.models.EcosSessionEntity;
+import fr.uga.l3miage.spring.tp3.models.EcosSessionProgrammationEntity;
 import fr.uga.l3miage.spring.tp3.models.EcosSessionProgrammationStepEntity;
+import fr.uga.l3miage.spring.tp3.models.ExamEntity;
 import fr.uga.l3miage.spring.tp3.repositories.CandidateRepository;
 import fr.uga.l3miage.spring.tp3.repositories.EcosSessionProgrammationRepository;
 import fr.uga.l3miage.spring.tp3.repositories.EcosSessionProgrammationStepRepository;
@@ -34,37 +36,40 @@ import static springfox.documentation.builders.RequestHandlerSelectors.any;
 public class SessionComponentTest {
     @Autowired
     private SessionComponent sessionComponent;
-    @MockBean
+    @Autowired
     private EcosSessionRepository ecosSessionRepository;
-    @MockBean
+    @Autowired
     private EcosSessionProgrammationRepository ecosSessionProgrammationRepository;
-    @MockBean
+    @Autowired
     private EcosSessionProgrammationStepRepository ecosSessionProgrammationStepRepository;
-    @SpyBean
-    private SessionMapper sessionMapper;
     @Test
     void createSession(){
-        SessionProgrammationStepCreationRequest sessionProgrammationStepCreationRequest=SessionProgrammationStepCreationRequest
+        EcosSessionProgrammationStepEntity ecosSessionProgrammationStepEntity = EcosSessionProgrammationStepEntity
                 .builder()
-                .description("description de test")
                 .code("test")
+                .description("test description")
                 .build();
-        Set<SessionProgrammationStepCreationRequest> setSteps=new HashSet<>();
-        setSteps.add(sessionProgrammationStepCreationRequest);
-        SessionProgrammationCreationRequest sessionProgrammationCreationRequest=SessionProgrammationCreationRequest
+        Set<EcosSessionProgrammationStepEntity> steps = new HashSet<>();
+        steps.add(ecosSessionProgrammationStepEntity);
+        EcosSessionProgrammationEntity ecosSessionProgrammationEntity=EcosSessionProgrammationEntity
                 .builder()
-                .label("test")
-                .steps(setSteps)
+                .ecosSessionProgrammationStepEntities(steps)
                 .build();
-        SessionCreationRequest sessionCreationRequest = SessionCreationRequest
+
+        ExamEntity examEntity=ExamEntity
                 .builder()
                 .name("test")
-                .ecosSessionProgrammation(sessionProgrammationCreationRequest)
                 .build();
-        EcosSessionEntity ecosSessionEntity= sessionMapper.toEntity(sessionCreationRequest);
-        when(ecosSessionRepository.save(ecosSessionEntity)).thenReturn(ecosSessionEntity);
-        when(ecosSessionProgrammationRepository.save(ecosSessionEntity.getEcosSessionProgrammationEntity())).thenReturn(ecosSessionEntity.getEcosSessionProgrammationEntity());
-        when(ecosSessionProgrammationStepRepository.saveAll(anySet())).thenReturn(List.of());
+        Set<ExamEntity> exams = new HashSet<>();
+        exams.add(examEntity);
+        EcosSessionEntity ecosSessionEntity = EcosSessionEntity
+                .builder()
+                .name("test")
+                .ecosSessionProgrammationEntity(ecosSessionProgrammationEntity)
+                .examEntities(exams)
+                .build();
+
+
 
 
         //when
@@ -72,8 +77,8 @@ public class SessionComponentTest {
 
         //then
         assertThat(response).usingRecursiveComparison().isEqualTo(ecosSessionEntity);
-        verify(ecosSessionRepository).save(ecosSessionEntity);
-        verify(ecosSessionProgrammationRepository).save(ecosSessionEntity.getEcosSessionProgrammationEntity());
-        verify(ecosSessionProgrammationStepRepository).saveAll(anySet());
+        assertThat(ecosSessionRepository.count()).isEqualTo(1);
+        assertThat(ecosSessionProgrammationRepository.count()).isEqualTo(1);
+        assertThat(ecosSessionProgrammationStepRepository.count()).isEqualTo(1);
     }
 }

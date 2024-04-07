@@ -3,6 +3,7 @@ import fr.uga.l3miage.spring.tp3.components.ExamComponent;
 import fr.uga.l3miage.spring.tp3.components.SessionComponent;
 import fr.uga.l3miage.spring.tp3.models.CandidateEntity;
 import fr.uga.l3miage.spring.tp3.models.CandidateEvaluationGridEntity;
+import fr.uga.l3miage.spring.tp3.models.EcosSessionEntity;
 import fr.uga.l3miage.spring.tp3.models.ExamEntity;
 import fr.uga.l3miage.spring.tp3.repositories.EcosSessionRepository;
 import fr.uga.l3miage.spring.tp3.request.SessionCreationRequest;

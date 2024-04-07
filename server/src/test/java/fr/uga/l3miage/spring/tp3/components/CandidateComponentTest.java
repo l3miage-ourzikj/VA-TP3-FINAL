@@ -9,12 +9,10 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import static com.google.common.primitives.UnsignedInts.toLong;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -23,7 +21,7 @@ import static org.mockito.Mockito.when;
 
 @AutoConfigureTestDatabase
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-public class CandidateComponentsTest {
+public class CandidateComponentTest {
     @Autowired
     private CandidateComponent candidateComponent;
     @MockBean
