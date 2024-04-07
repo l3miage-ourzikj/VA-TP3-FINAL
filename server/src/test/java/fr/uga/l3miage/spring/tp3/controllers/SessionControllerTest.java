@@ -47,6 +47,7 @@ public class SessionControllerTest {
         ecosSessionRepository.deleteAll();
     }
     @Test
+    // Détection d'une faille on peut créer une session avec un set d'examen vide
     void cantCreateSessionWithoutExam(){
         final HttpHeaders headers = new HttpHeaders();
         SessionProgrammationStepCreationRequest sessionProgrammationStepCreationRequest=SessionProgrammationStepCreationRequest
@@ -66,6 +67,37 @@ public class SessionControllerTest {
                 .builder()
                 .name("test")
                 .examsId(Set.of())
+                .ecosSessionProgrammation(sessionProgrammationCreationRequest)
+                .build();
+        // when
+        ResponseEntity<SessionResponse> response = testRestTemplate
+                .exchange("/api/sessions/create", HttpMethod.POST, new HttpEntity<>(sessionCreationRequest, headers), SessionResponse.class);
+
+
+        //then
+        assertThat(response.getStatusCode()).isEqualTo(400);
+
+    }
+    @Test
+    void cantCreateSessionWithoutGoodExamID(){
+        final HttpHeaders headers = new HttpHeaders();
+        SessionProgrammationStepCreationRequest sessionProgrammationStepCreationRequest=SessionProgrammationStepCreationRequest
+                .builder()
+                .code("test")
+                .description("description test")
+                .build();
+
+        Set<SessionProgrammationStepCreationRequest> steps=new HashSet<>();
+        steps.add(sessionProgrammationStepCreationRequest);
+        SessionProgrammationCreationRequest sessionProgrammationCreationRequest=SessionProgrammationCreationRequest
+                .builder()
+                .label("test")
+                .steps(steps)
+                .build();
+        final  SessionCreationRequest sessionCreationRequest=SessionCreationRequest
+                .builder()
+                .name("test")
+                .examsId(Set.of((long)1))
                 .ecosSessionProgrammation(sessionProgrammationCreationRequest)
                 .build();
         // when
