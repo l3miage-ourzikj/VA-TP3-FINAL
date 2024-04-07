@@ -29,7 +29,6 @@ public class CandidateServiceTest {
     private CandidateService candidateService;
 @MockBean
     private CandidateComponent candidateComponent;
-//Le test ne passe pas car il ne prend pas en compte le coefficient d'examen en compte dans le dénominateur
 @Test
     void getCandidateAverage() throws CandidateNotFoundException {
         //given
