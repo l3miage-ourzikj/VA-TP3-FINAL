@@ -24,7 +24,7 @@ public interface SessionMapper {
 
     EcosSessionProgrammationStepEntity toEntity(SessionProgrammationStepCreationRequest request);
 
-    SessionResponse toResponse(EcosSessionEntity entity);
+     SessionResponse toResponse(EcosSessionEntity entity);
 
     EcosSessionProgrammationResponse toResponse(EcosSessionProgrammationEntity entity);
 

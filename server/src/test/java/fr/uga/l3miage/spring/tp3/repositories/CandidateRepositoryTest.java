@@ -101,6 +101,10 @@ public class CandidateRepositoryTest {
         cleanCandidate(candidate1);
         cleanCandidate(candidate2);
         cleanCandidate(candidate3);
+        candidateRepository.delete(candidate1);
+        candidateRepository.delete(candidate2);
+        candidateRepository.delete(candidate3);
+        assertThat(candidateRepository.count()).isEqualTo(0);
 
     }
     @Test
